@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+  	
+	<title>Login</title>
+</head>
+<body>
+	<div class="cd-fold-content single-page">
+		<h2>Gestión</h2>
+		<em>Esta sección es exclusva para administradores/jefe de departamento</em>
+		<p>Si eres personal administrativo, jefe de departamento, inicia seción para ver tus solicitudes.</p>
+		<br><br>
+		<div id="login">
+            <form>
+                Usuario: <input type="text" class="text-input" name="firstname" placeholder="nombre" maxlength="30" autofocus required><br>
+                Contraseña: <input type="password" class="text-input" name="lastname" placeholder="password" maxlength="40" autofocus required><br>
+                <br><br><br><br><br>
+                <input type="submit" value="Entrar">
+             </form>
+             <button id="recuPass" class="recuperaPass">Recuperar Contraseña</button>
+        </div>
+        <div id="recuperarPass">
+            <h3>Escriba su correo para recuperar contraseña</h3>
+            <form>
+                 E-mail: <input type="email" class="text-input" name="email" placeholder=" ej:algo@dominio.com"  maxlength="40" autofocus required><br>
+                <br><br>
+                <input type="submit" value="Enviar">
+             </form>
+        </div>
+	</div>
+</body>
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+<script>
+$(document).ready(function(){
+    $("#recuPass").click(function(){
+        $("#login").hide(1000);
+    });
+    $("#recuPass").click(function(){
+        $("#recuperarPass").show(1000);
+    });
+});
+</script>
+</body>
+</html>

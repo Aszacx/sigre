@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Kevin's custom styles
+   ========================================================================== */
+body {
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.centrar{
+    text-align: center;
+}
+
+.derecha{
+    text-align: right;
+}
+.opcion{
+    margin-bottom: 70px;
+    margin-top: 30px;
+}
+.tex-correo{
+    width: 85%;
+    height: 120px;
+    margin-left: 7%;
+}
+.icon-out{
+    padding-left: -3px;
+    padding-right: 7px;
+}
+.opcion-sa{
+    height: 200px;
+}
+.opcion-sa a{
+    bottom: 0px;
+}
+.sin-margin-right{
+    padding-right: 0px;
+}
+.sin-margin-left{
+    padding-left: 0px;
+}
+.full-botton{
+    width: 100%;
+}
+.btn-cancelar{
+    width: 95%;
+}
+.btn-cancelar a{
+    width: 30%;
+}
+.fondo{
+    position: absolute;
+}
+/* --------- Formulario -----------*/
+input.text-input {
+    width: 95%;
+    height: 35px;
+    margin: 10px;
+}
+input.text-input:focus {
+    outline-color: #FFC414;
+}
+textarea {
+    width: 95%;
+    margin-left: 12px;
+}
+input[type="submit"] {
+    width: 97%;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+input[type="submit"]:hover {
+    background-color: #107110;
+}
+/* --------- Tabla editar -----------*/
+.tabla-centrar{
+    width: 50%;
+    text-align: center;
+    height: 325px;
+    margin-left: 30%;
+}
+.tabla-centrar-departamento{
+    width: 100%;
+    text-align: center;
+    height: 230px;
+    margin-left: 5%;
+}
+.tabla-centrar-academia{
+    width: 100%;
+    text-align: center;
+    height: 170px;
+    margin-left: 5%;
+}
+.boots{
+    overflow-x: hidden;
+    overflow: scroll;
+    width: 100%;
+    height: 80px;  
+}
