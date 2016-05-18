@@ -45,10 +45,6 @@
         <servlet-class>controllers.examen</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>solicitud</servlet-name>
-        <servlet-class>controllers.solicitud</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>jefeDepartamento</servlet-name>
         <servlet-class>controllers.jefeDepartamento</servlet-class>
     </servlet>
@@ -67,6 +63,10 @@
     <servlet>
         <servlet-name>recuperar_contrasena</servlet-name>
         <servlet-class>controllers.recuperar_contrasena</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>examenes_pendientes</servlet-name>
+        <servlet-class>controllers.examenes_pendientes</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>usuarios</servlet-name>
@@ -113,10 +113,6 @@
         <url-pattern>/examen</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>solicitud</servlet-name>
-        <url-pattern>/solicitud</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>jefeDepartamento</servlet-name>
         <url-pattern>/jefeDepartamento</url-pattern>
     </servlet-mapping>
@@ -135,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>recuperar_contrasena</servlet-name>
         <url-pattern>/recuperar_contrasena</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>examenes_pendientes</servlet-name>
+        <url-pattern>/examenes_pendientes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

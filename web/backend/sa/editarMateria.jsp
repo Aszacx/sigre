@@ -18,8 +18,8 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form action="<%= request.getContextPath()%>/opMaterias?accion=editar" method="POST">
-            ID: <input type="text" class="form-control" name="idMateria" readonly maxlength="30" required value="<c:out value="${materia.getIdMateria()}" />"><br>
-            Academia: <input type="text" class="form-control" name="materia" maxlength="30" autofocus required value="<c:out value="${materia.getMateria()}" />"><br>
+            ID: <input type="text" class="form-control" name="idMateria" readonly required value="<c:out value="${materia.getIdMateria()}" />"><br>
+            Academia: <input type="text" class="form-control" name="materia" maxlength="50" autofocus required value="<c:out value="${materia.getMateria()}" />"><br>
             Nivel: <input type="number" class="form-control" name="nivel" placeholder="Nivel" maxlength="30" max="5" min="1" autofocus required value="<c:out value="${materia.getNivel()}" />"><br>
             Departamento: <select class="form-control" name="academia" required>
                 <option value="${materia.getAcademia_idAcademia()}">${materia.getAcademia()}</option>

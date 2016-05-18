@@ -5,15 +5,18 @@
  */
 package controllers;
 
+import entidades.Departamento;
 import entidades.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.departamentoModel;
 import models.usuarioModel;
 
 /**
@@ -35,28 +38,67 @@ public class opUsuarios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         String accion = request.getParameter("accion");
-        String mensaje;
+        String mensaje = "";
         boolean estatus = false;
         usuarioModel cp = new usuarioModel();
+        departamentoModel cb = new departamentoModel();
         
         switch (accion) {
             case "agregar":
-                estatus = cp.agregarUsuario(new Usuario(Integer.parseInt(request.getParameter("tipo")),
+                if(!request.getParameter("tipo").equals(3)){
+                   estatus = cp.agregarUsuario(new Usuario(Integer.parseInt(request.getParameter("tipo")),
                         request.getParameter("nombre"),
                         request.getParameter("apellidoP"),
                         request.getParameter("apellidoM"),
                         request.getParameter("cel"),
                         request.getParameter("email"),
-                        request.getParameter("pass"))
+                        request.getParameter("pass"),
+                        Integer.parseInt(request.getParameter("departamento")))); 
+                    
+                    if(estatus){
+                        System.out.println(estatus);
+                    } else {
+                        System.out.println(estatus);
+                    }                
+                    response.sendRedirect(request.getContextPath()+"/usuarios");
+                }
+                else{
+                   estatus = cp.agregarUsuario(new Usuario(Integer.parseInt(request.getParameter("tipo")),
+                        request.getParameter("nombre"),
+                        request.getParameter("apellidoP"),
+                        request.getParameter("apellidoM"),
+                        request.getParameter("cel"),
+                        request.getParameter("email"),
+                        request.getParameterValues("materias")));
+                   
+                    if(estatus){
+                        System.out.println(estatus);
+                    } else {
+                        System.out.println(estatus);
+                    }                
+                    response.sendRedirect(request.getContextPath()+"/usuarios");
+                }
+                break;
+            case "cita":
+                estatus = cp.agregarCita(new Usuario(Integer.parseInt(request.getParameter("tipo")),
+                        request.getParameter("nombre"),
+                        request.getParameter("apellidoP"),
+                        request.getParameter("apellidoM"),
+                        request.getParameter("cel"),
+                        request.getParameter("email"),
+                        request.getParameter("boleta"),
+                        Integer.parseInt(request.getParameter("materia")),
+                        request.getParameter("motivos"))
                 );
                 if(estatus){
                     System.out.println(estatus);
                 } else {
                     System.out.println(estatus);
                 }                
-                response.sendRedirect(request.getContextPath()+"/usuarios");
+                response.sendRedirect(request.getContextPath());
                 break;
             case "eliminar":{
                     Integer id = Integer.parseInt(request.getParameter("id"));
@@ -73,7 +115,9 @@ public class opUsuarios extends HttpServlet {
             case "edicion":{
                 Integer id = Integer.parseInt(request.getParameter("id"));    
                 Usuario usuario = cp.getUsuarioById(id);
+                ArrayList<Departamento> departamentos = cb.obtenerDepartamentos();
                 request.setAttribute("usuario", usuario);
+                request.setAttribute("departamentos", departamentos);
                 request.getRequestDispatcher("backend/sa/editarProfesor.jsp").forward(request, response);
                 break;
             }
@@ -85,7 +129,8 @@ public class opUsuarios extends HttpServlet {
                                              request.getParameter("apellidoM"),
                                              request.getParameter("cel"),
                                              request.getParameter("email"),
-                                             request.getParameter("pass")));
+                                             request.getParameter("pass"),
+                                             Integer.parseInt(request.getParameter("departamento"))));
                 if(estatus){
                     System.out.println(estatus);
                 } else {

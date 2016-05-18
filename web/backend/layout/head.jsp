@@ -3,7 +3,7 @@
 <!doctype html>
 <html class="no-js">
     <head>
-      <meta charset="utf-8">
+      <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <title>Gestión</title>
       <meta name="description" content="">
@@ -12,22 +12,12 @@
       <link rel="stylesheet" href="backend/assets/css/bootstrap.min.css">
       <link rel="stylesheet" href="backend/assets/css/bootstrap-theme.min.css">
       <link rel="stylesheet" href="backend/assets/css/main.css">
+      <script src="backend/assets/js/vendor/jquery-1.11.2.min.js"></script>
       <script src="backend/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>   
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <p class="derecha">
-                        <% HttpSession sesiones = request.getSession(); %>
-                        <h5>
-                            <b>Bienvenido:</b> <%= (String)sesiones.getAttribute("email") %> 
-                            <b>Área:</b> <%= sesiones.getAttribute("tipo").toString() %> 
-                            <a class="btn btn-default" href="<%= request.getContextPath()%>/login?accion=cerrar" role="button">Cerrar Sesión <i class="glyphicon glyphicon-off"></i></a>
-                        </h5>
-                    </p>
-                </div>
-            </div>
+            
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-md-12">

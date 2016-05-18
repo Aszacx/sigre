@@ -38,11 +38,11 @@ public class opMaterias extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         String accion = request.getParameter("accion");
         materiaModel cp = new materiaModel();
-        academiaModel cb =new academiaModel();
-        
+        academiaModel cb = new academiaModel();
         switch (accion) {
             case "agregar":
                 cp.agregarMateria(new Materia(request.getParameter("materia"),

@@ -1,11 +1,12 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="layout/head.jsp"%>
 <div class="cd-fold-content single-page">
     <h2>REGISTRAR SOLICITUD DE REVISIÓN</h2>
     <em>Llena el siguiente formulario adecuadamente.</em>
-    <form action="<%= request.getContextPath()%>/solicitud" method="POST">
-        <input type="hidden" name="tipo" value="3">
-        Nombre(s): <input type="text" class="text-input" name="nombre" placeholder="Nombre" maxlength="30" pattern="[A-Za-z]" autofocus required><br>
+    <form action="<%= request.getContextPath()%>/opUsuarios?accion=cita" method="POST">
+        <input type="hidden" name="tipo" value="4">
+        Nombre(s): <input type="text" class="text-input" name="nombre" placeholder="Nombre" maxlength="30" autofocus required><br>
         Apellido Paterno: <input type="text" class="text-input" name="apellidoP" placeholder="Apellido Paterno" maxlength="40" autofocus required><br>
         Apellido Materno: <input type="text" class="text-input" name="apellidoM" placeholder="Apellido Materno" maxlength="40" autofocus required><br>
         No. Boleta: <input type="text" class="text-input" name="boleta" placeholder="No. de Boleta" maxlength="40" autofocus required><br>

@@ -14,7 +14,7 @@
             <div class="opcion derecha">
                 <h2>Ver solicitudes de examenes</h2>
                 <p>Podrás ver las solicitudes de examenes que tienes que atender.</p>
-                <p><a class="btn btn-default" href="listaExamenesPendientes.jsp" role="button">Ver examenes &raquo;</a></p>
+                <p><a class="btn btn-default" href="examenes_pendientes" role="button">Ver examenes &raquo;</a></p>
             </div>
         </div>
     </div>

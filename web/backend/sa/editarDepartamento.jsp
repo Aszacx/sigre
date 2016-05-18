@@ -18,8 +18,8 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form action="<%= request.getContextPath()%>/opDepartamentos?accion=editar" method="POST">
-            ID: <input type="text" class="form-control" name="idDepartamento" readonly maxlength="30" required value="<c:out value="${departamento.getIdDepartamento()}" />"><br>
-            Departamento: <input type="text" class="form-control" name="departamento" maxlength="30" autofocus required value="<c:out value="${departamento.getDepartamento()}" />"><br>
+            ID: <input type="text" class="form-control" name="idDepartamento" readonly required value="<c:out value="${departamento.getIdDepartamento()}" />"><br>
+            Departamento: <input type="text" class="form-control" name="departamento" maxlength="50" autofocus required value="<c:out value="${departamento.getDepartamento()}" />"><br>
             <br>
             <input type="submit" value="Editar">
         </form>

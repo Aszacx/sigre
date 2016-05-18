@@ -37,3 +37,24 @@ $(function(){
 $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();
 });
+
+function tipoUsuario() {
+    var memb = $('#tipoUsuario').val();
+    if (memb == 3) {
+        $('.materia').css('display', 'block');
+        $('.materia').attr('required', 'required');
+        $('.departamento').css('display', 'none');
+        $('.departamento').removeAttr('required', 'required');
+        $('.pass').css('display', 'none');
+        $('.pass').removeAttr('required', 'required');
+    } else {
+        $('.materia').css('display', 'none');
+        $('.materia').removeAttr('required', 'required');
+        $('.departamento').css('display', 'block');
+        $('.departamento').attr('required', 'required');
+        $('.pass').css('display', 'block');
+        $('.pass').attr('required', 'required');
+    }
+}
+$('#tipoUsuario').change(tipoUsuario);
+tipoUsuario();

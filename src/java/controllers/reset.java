@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.usuarioModel;
 
 /**
@@ -37,23 +38,35 @@ public class reset extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, MessagingException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         String accion = request.getParameter("accion");
+        HttpSession sesion = request.getSession();
         usuarioModel cp = new usuarioModel();
         email em = new email();
         
         if(accion.equals("recuperar")){
             try {
+                String msj = "";
                 String email = request.getParameter("email");
                 Usuario usuario = cp.getUsuarioByEmail(email);
-                String cuerpo = "<h4>Has restablecido tu contraseña de acceso al sistema SIGRE.</h4>";
-                cuerpo += "<p>Estimado "+usuario.getNombre()+" "+usuario.getApellidoP()+":</p>";
-                cuerpo += "<p>Hemos restablecido tu contraseña perteneciente al usuario: <b>"+usuario.getEmail()+"</b></p>";
-                cuerpo += "<p>Tu nueva contraseña es: <b>"+usuario.getPass()+"</b></p>";
-                cuerpo += "<p>Un cordial saludo.</p>";
-                cuerpo += "<p>Atentamente <b>SIGRE</b></p>";            
-                em.enviar(usuario.getEmail(), "Restablecer contraseña.", cuerpo);
-                response.sendRedirect(request.getContextPath()+"/recuperar_contrasena");
+                if(usuario == null){
+                    msj = "<div class='alert alert-danger text-center'>Correo eléctronico no encontrado.</div>";
+                    sesion.setAttribute("msj", msj);
+                    response.sendRedirect(request.getContextPath()+"/recuperar_contrasena");
+                } else{
+                    String cuerpo = "<h4>Has restablecido tu contraseña de acceso al sistema SIGRE.</h4>";
+                    cuerpo += "<p>Estimado "+usuario.getNombre()+" "+usuario.getApellidoP()+":</p>";
+                    cuerpo += "<p>Hemos restablecido tu contraseña perteneciente al usuario: <b>"+usuario.getEmail()+"</b></p>";
+                    cuerpo += "<p>Tu nueva contraseña es: <b>"+usuario.getPass()+"</b></p>";
+                    cuerpo += "<p>Un cordial saludo.</p>";
+                    cuerpo += "<p>Atentamente <b>SIGRE</b></p>";            
+                    em.enviar(usuario.getEmail(), "Restablecer contraseña.", cuerpo);
+                    msj = "<div class='alert alert-success text-center'>Se te ha enviado un correo con tu nueva contraseña.</div>";
+                    sesion.setAttribute("msj", msj);
+                    response.sendRedirect(request.getContextPath()+"/recuperar_contrasena");
+                }
+                    
             } catch (SQLException | MessagingException | IOException e) {
                 System.out.println(e);
             }

@@ -27,13 +27,12 @@
 </div>
 <br>
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="alert alert-info"><c:out value="${mensaje}" /></div>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th><b>#ID</b></th>
                         <th><b>Nombre Materia</b></th>
                         <th><b>Nivel</b></th>
                         <th><b>Academia Perteneciente</b></th>
@@ -43,7 +42,6 @@
                 <tbody class="searchable">
                      <c:forEach items="${materias}" var="item">
                     <tr style="display:table-row">
-                        <td><c:out value="${item.getIdMateria()}" /></td>
                         <td><c:out value="${item.getMateria()}" /></td>
                         <td><c:out value="${item.getNivel()}" /></td>
                         <td><c:out value="${item.getAcademia()}" /></td>
@@ -67,7 +65,7 @@
         <p class="derecha"><a class="btn btn-primary btn-lg" href="administracion" role="button">Panel de Administración &raquo;</a>
     </div>
 </div>
-<SCRIPT type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         (function ($) {
             $('#filtrar').keyup(function () {
@@ -79,7 +77,7 @@
             })
         }(jQuery));
     });
-</SCRIPT>
+</script>
 <!--Modal Agregar Usuario-->
 <div class="modal fade" id="modalAddMateria" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -90,15 +88,14 @@
             </div>
             <div class="modal-body">
                 <form action="<%= request.getContextPath()%>/opMaterias?accion=agregar" method="POST" id="formAddMateria">
-                    Nombre de la materia: <input type="text" class="form-control" name="materia" placeholder="Nombre de la Materia" maxlength="30" autofocus required><br>
-                    Nivel: <input type="number" class="form-control" name="nivel" placeholder="Nivel" maxlength="30" max="5" min="1" required><br>
+                    Nombre de la materia: <input type="text" class="form-control" name="materia" placeholder="Nombre de la Materia" maxlength="50" autofocus required><br>
+                    Nivel: <input type="number" class="form-control" name="nivel" placeholder="Nivel" max="5" min="1" required><br>
                     Academia: <select class="form-control" name="academia" required>
                         <option value="">Selecciona una Academia</option>
                         <c:forEach items="${academias}" var="aca">
                             <option value="${aca.getIdAcademia()}">${aca.getAcademia()}</option>
                         </c:forEach>
                     </select>
-                    <br>
                     <br>        
                     <input type="submit" value="Registrar">
                 </form>

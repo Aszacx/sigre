@@ -5,6 +5,8 @@
  */
 package controllers;
 
+import entidades.Departamento;
+import entidades.Materia;
 import entidades.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.departamentoModel;
+import models.materiaModel;
 import models.usuarioModel;
 
 /**
@@ -36,16 +40,23 @@ public class usuarios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
                 
         String mensaje;
         usuarioModel op = new usuarioModel();
+        departamentoModel cp = new departamentoModel();
+        materiaModel cb = new materiaModel();
         ArrayList<Usuario> usuarios = op.obtenerUsuarios();
+        ArrayList<Departamento> departamentos = cp.obtenerDepartamentos();
+        ArrayList<Materia> materias = cb.obtenerMaterias();
         if(usuarios.isEmpty()){
             mensaje = "No hay profesores registrados.";
         } else {
             mensaje = "Se encontraron "+usuarios.size()+" profesores.";
         }
         request.setAttribute("usuarios", usuarios);
+        request.setAttribute("departamentos", departamentos);
+        request.setAttribute("materias", materias);
         request.setAttribute("mensaje", mensaje);
         request.getRequestDispatcher("backend/sa/gestionProfesor.jsp").forward(request, response);
         

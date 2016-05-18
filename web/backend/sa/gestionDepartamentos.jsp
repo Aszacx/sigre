@@ -33,7 +33,6 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th><b>#ID</b></th>
                         <th><b>Nombre Departamento</b></th>
                         <th><b>Acciones</b></th>
                     </tr>
@@ -41,7 +40,6 @@
                 <tbody class="searchable">
                     <c:forEach items="${departamentos}" var="item">
                     <tr style="display:table-row">
-                        <td><c:out value="${item.getIdDepartamento()}" /></td>
                         <td><c:out value="${item.getDepartamento()}" /></td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
@@ -61,7 +59,7 @@
         <p class="derecha"><a class="btn btn-primary btn-lg" href="administracion" role="button">Panel de Administración &raquo;</a>
     </div>
 </div>
-<SCRIPT type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         (function ($) {
             $('#filtrar').keyup(function () {
@@ -73,7 +71,7 @@
             })
         }(jQuery));
     });
-</SCRIPT>
+</script>
 <!--Modal Agregar Departamento-->
 <div class="modal fade" id="modalAddDepartamento" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -84,7 +82,7 @@
             </div>
             <div class="modal-body">
                 <form action="<%= request.getContextPath()%>/opDepartamentos?accion=agregar" method="POST" id="formAddDepartamento">
-                    Nombre del departamento: <input type="text" class="form-control" name="departamento" placeholder="Nombre del Departamento" maxlength="30" autofocus required><br>
+                    Nombre del departamento: <input type="text" class="form-control" name="departamento" placeholder="Nombre del Departamento" maxlength="50" autofocus required><br>
                     <input type="submit" value="Registrar">
                 </form>
             </div>
