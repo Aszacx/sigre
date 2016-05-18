@@ -92,7 +92,7 @@
                     Apellido Paterno: <input type="text" class="form-control" name="apellidoP" placeholder="Apellido Paterno" maxlength="40" required><br>
                     Apellido Materno: <input type="text" class="form-control" name="apellidoM" placeholder="Apellido Materno" maxlength="40" required><br>
                     <p class="materia">Materias:</p> 
-                    <select class="form-control materia" name="materias" size="5" multiple>
+                    <select class="form-control materia selectpicker" name="materias" size="5" multiple>
                         <c:forEach items="${materias}" var="mate">
                             <option value="${mate.getIdMateria()}">${mate.getMateria()}</option>
                         </c:forEach>
