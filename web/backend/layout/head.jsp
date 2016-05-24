@@ -18,7 +18,11 @@
     </head>
     <body>   
         <div class="container-fluid">
-            
+            <div class="text-right">
+                <a href="<%= request.getContextPath()%>/login?accion=cerrar" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-user"></i> Cerrar Sesión
+                </a>
+            </div><br>
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-md-12">

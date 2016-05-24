@@ -21,7 +21,7 @@ import models.usuarioModel;
  *
  * @author Lenovo
  */
-public class listaExamenes extends HttpServlet {
+public class citas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,21 +37,22 @@ public class listaExamenes extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+       
+        String msj = "";
+        usuarioModel cp = new usuarioModel();
+        Integer id_materia = Integer.parseInt(request.getParameter("id"));
+        ArrayList<Usuario> usuarios = cp.getUsuariosByMateria(id_materia);
         
-        String mensaje;
-        usuarioModel op = new usuarioModel();
-        ArrayList<Usuario> citas = op.obtenerCitas();
-        if(citas.isEmpty()){
-            mensaje = "No hay citas registrados.";
+        if(usuarios.isEmpty()){
+            msj = "No hay profesores registrados.";
         } else {
-            mensaje = "Se encontraron "+citas.size()+" citas.";
+            msj = "Se encontraron "+usuarios.size()+" profesores.";
         }
-        request.setAttribute("citas", citas);
-        request.setAttribute("mensaje", mensaje);
+        request.setAttribute("usuarios", usuarios);
+        request.setAttribute("msj", msj);
+        request.getRequestDispatcher("backend/jd/generarCita.jsp").forward(request, response);
         
-        
-        request.getRequestDispatcher("backend/sa/listaExamenes.jsp").forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,7 +70,7 @@ public class listaExamenes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(listaExamenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(citas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,7 +88,7 @@ public class listaExamenes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(listaExamenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(citas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

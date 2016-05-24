@@ -6,6 +6,9 @@
     if (sesion.getAttribute("email") == null) {
         response.sendRedirect(request.getContextPath());
     }
+    else if(sesion.getAttribute("tipo").equals(1)){
+        response.sendRedirect(request.getContextPath()+"/jefeDepartamento");
+    }
 %>
 <div class="container">
     <div class="row">
@@ -28,40 +31,32 @@
     <div class="row">
         <div class="col-md-12 ">
             <div class="panel panel-default">
+                <div class="alert alert-info"><c:out value="${mensaje}" /></div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th><b>Materia</b></th>
-                            <th><b>fecha</b></th>
-                            <th><b>Nombre</b></th>
-                            <th><b>Estado</b></th>
+                            <th><b>Fecha</b></th>
+                            <th><b>Alumno</b></th>
+                            <th><b>Estatus</b></th>
                         </tr>
                     </thead>
                     <tbody class="searchable">
+                        <c:forEach items="${citas}" var="item">
                         <tr style="display:table-row">
-                            <td>Análisis Vectorial</td>
-                            <td>dd/mm/aaaa</td>
-                            <td>Nombre Apellido</td>
-                            <td>Con cita</td>
+                            <td><c:out value="${item.getMateria()}" /></td>
+                            <td><c:out value="${item.getFecha()}" /></td>
+                            <td><c:out value="${item.getNombre()} ${item.getApellidoP()} ${item.getApellidoM()}" /></td>
+                            <td><c:out value="${item.getEstatus()}" /></td>
                         </tr>
-                        <tr style="display:table-row">
-                            <td>Cálculo</td>
-                            <td>dd/mm/aaaa</td>
-                            <td>nombre apeido</td>
-                            <td>Pendiente</td>
-                        </tr>
-                        <tr style="display:table-row">
-                            <td>Ecuaciones Diferenciales</td>
-                            <td>dd/mm/aaaa</td>
-                            <td>nombre apeido</td>
-                            <td>Con cita</td>
-                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
         <div class="col-md-12">
-            <p class="derecha"><a class="btn btn-primary btn-lg" href="administracion" role="button">Ir a Home &raquo;</a>
+            <p class="derecha"><a class="btn btn-primary btn-lg" href="subAcademica" role="button">Ir a Home &raquo;</a>
         </div>
     </div>
 </div>

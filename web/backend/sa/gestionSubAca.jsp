@@ -6,7 +6,10 @@
     
     if (sesion.getAttribute("email") == null) {
         response.sendRedirect(request.getContextPath());
-    }     
+    }
+    else if(sesion.getAttribute("tipo").equals(1)){
+        response.sendRedirect(request.getContextPath()+"/jefeDepartamento");
+    }
 %> 
 <div class="container text-center">
     <div class="col-md-3">

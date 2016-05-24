@@ -68,6 +68,18 @@
         <servlet-name>examenes_pendientes</servlet-name>
         <servlet-class>controllers.examenes_pendientes</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>opCitas</servlet-name>
+        <servlet-class>controllers.opCitas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>citas</servlet-name>
+        <servlet-class>controllers.citas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>docentes</servlet-name>
+        <servlet-class>controllers.docentes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>usuarios</servlet-name>
         <url-pattern>/usuarios</url-pattern>
@@ -135,6 +147,18 @@
     <servlet-mapping>
         <servlet-name>examenes_pendientes</servlet-name>
         <url-pattern>/examenes_pendientes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>opCitas</servlet-name>
+        <url-pattern>/opCitas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>citas</servlet-name>
+        <url-pattern>/citas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>docentes</servlet-name>
+        <url-pattern>/docentes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

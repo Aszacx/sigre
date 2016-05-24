@@ -22,7 +22,8 @@ public class materiaModel extends conexion{
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT m.idMateria, m.materia, m.nivel, a.academia FROM materia AS m LEFT JOIN academia AS a ON m.Academia_idAcademia = a.idAcademia";
+            String sql = "SELECT m.idMateria, m.materia, m.nivel, a.academia FROM materia AS m "
+                    + "LEFT JOIN academia AS a ON m.Academia_idAcademia = a.idAcademia ORDER BY m.materia";
             pst = getConnection().prepareCall(sql);
             rs = pst.executeQuery();
 

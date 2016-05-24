@@ -47,12 +47,12 @@ public class login extends HttpServlet {
                 case 1:
                     sesion.setAttribute("email", email);
                     sesion.setAttribute("tipo", tipo);
-                    response.sendRedirect(request.getContextPath()+"/subAcademica");
+                    response.sendRedirect(request.getContextPath()+"/jefeDepartamento"); 
                     break;
-                case 2:
+                case 3:
                     sesion.setAttribute("email", email);
                     sesion.setAttribute("tipo", tipo);
-                    response.sendRedirect(request.getContextPath()+"/jefeDepartamento"); 
+                    response.sendRedirect(request.getContextPath()+"/subAcademica");
                     break;
                 default:
                     out.println("Usuario o Contraseña Inválida");

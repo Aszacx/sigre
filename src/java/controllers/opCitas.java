@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entidades.Departamento;
 import entidades.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,13 +16,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.departamentoModel;
 import models.usuarioModel;
 
 /**
  *
  * @author Lenovo
  */
-public class listaExamenes extends HttpServlet {
+public class opCitas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,21 +39,26 @@ public class listaExamenes extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
-        String mensaje;
-        usuarioModel op = new usuarioModel();
-        ArrayList<Usuario> citas = op.obtenerCitas();
-        if(citas.isEmpty()){
-            mensaje = "No hay citas registrados.";
-        } else {
-            mensaje = "Se encontraron "+citas.size()+" citas.";
+
+        String accion = request.getParameter("accion");
+        boolean estatus = false;
+        usuarioModel cp = new usuarioModel();
+
+        switch (accion) {
+            case "generar":
+                Integer id_materia = Integer.parseInt(request.getParameter("id"));
+                Usuario usuario = cp.getUsuarioByCita(id_materia);
+                request.setAttribute("usuario", usuario);
+                
+                if (estatus) {
+                    System.out.println(estatus);
+                } else {
+                    System.out.println(estatus);
+                }
+                response.sendRedirect(request.getContextPath() + "/citas");
+            break;
+    
         }
-        request.setAttribute("citas", citas);
-        request.setAttribute("mensaje", mensaje);
-        
-        
-        request.getRequestDispatcher("backend/sa/listaExamenes.jsp").forward(request, response);
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,7 +76,7 @@ public class listaExamenes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(listaExamenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(opUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,7 +94,7 @@ public class listaExamenes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(listaExamenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(opUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

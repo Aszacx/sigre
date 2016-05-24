@@ -54,7 +54,7 @@ public class email {
             if ( (c >= '0' && c <='9') || (c >='A' && c <='Z') ){
                 cadenaAleatoria += c;
                 i ++;
-                }
+            }
         }
         return cadenaAleatoria;
     }

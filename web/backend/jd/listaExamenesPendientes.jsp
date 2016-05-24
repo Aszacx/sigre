@@ -6,6 +6,9 @@
     if (sesion.getAttribute("email") == null) {
         response.sendRedirect(request.getContextPath());
     }
+    else if(sesion.getAttribute("tipo").equals(3)){
+        response.sendRedirect(request.getContextPath()+"/subAcademica");
+    }
 %> 
 <div class="container">
     <div class="row">
@@ -44,7 +47,7 @@
                     <tbody class="searchable">
                         <c:forEach items="${citas}" var="item">
                         <tr style="display:table-row">
-                            <td><c:out value="${item.getMateria_idMateria()}" /></td>
+                            <td><c:out value="${item.getMateria()}" /></td>
                             <td><c:out value="${item.getFecha()}" /></td>
                             <td><c:out value="${item.getNombre()} ${item.getApellidoP()} ${item.getApellidoM()}" /></td>
                             <td><c:out value="${item.getBoleta()}" /></td>
@@ -52,7 +55,7 @@
                             <td><c:out value="${item.getCel()}" /></td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <a class="btn btn-info" href="generarCita.jsp" role="button">Generar Cita &raquo;</a>
+                                    <a class="btn btn-info" href="<%= request.getContextPath() %>/citas?accion=generar&id=<c:out value="${item.getMateria_idMateria()}" />" role="button">Generar Cita &raquo;</a>
                                     <a class="btn btn-danger" href="generarCita.jsp" role="button">Cancelar Revisión &raquo;</a>
                                     <a class="btn btn-warning" href="generarCita.jsp" role="button">Finalizar &raquo;</a>
                                 </div>

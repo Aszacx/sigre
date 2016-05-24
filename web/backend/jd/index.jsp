@@ -4,8 +4,10 @@
 <%
     HttpSession sesion = request.getSession();
     if (sesion.getAttribute("email") == null) {
-        //if(sesion.getAttribute("tipo").toString().equals(2) == true){
-            response.sendRedirect(request.getContextPath());         
+        response.sendRedirect(request.getContextPath());         
+    }
+    else if(sesion.getAttribute("tipo").equals(3)){
+        response.sendRedirect(request.getContextPath()+"/subAcademica");
     }
 %> 
 <div class="container">

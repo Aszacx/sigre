@@ -15,13 +15,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.departamentoModel;
+import models.materiaModel;
 import models.usuarioModel;
 
 /**
  *
  * @author Lenovo
  */
-public class listaExamenes extends HttpServlet {
+public class docentes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,21 +39,18 @@ public class listaExamenes extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+                
         String mensaje;
-        usuarioModel op = new usuarioModel();
-        ArrayList<Usuario> citas = op.obtenerCitas();
-        if(citas.isEmpty()){
-            mensaje = "No hay citas registrados.";
+        usuarioModel cp = new usuarioModel();
+        ArrayList<Usuario> usuarios = cp.obtenerDocentes();
+        if(usuarios.isEmpty()){
+            mensaje = "No hay profesores registrados.";
         } else {
-            mensaje = "Se encontraron "+citas.size()+" citas.";
+            mensaje = "Se encontraron "+usuarios.size()+" profesores.";
         }
-        request.setAttribute("citas", citas);
+        request.setAttribute("usuarios", usuarios);
         request.setAttribute("mensaje", mensaje);
-        
-        
-        request.getRequestDispatcher("backend/sa/listaExamenes.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("backend/sa/gestionDocentes.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,13 +62,13 @@ public class listaExamenes extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(listaExamenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(opUsuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -87,7 +86,7 @@ public class listaExamenes extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(listaExamenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(usuarios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -104,6 +104,6 @@ input[type="submit"]:hover {
     height: 80px;  
 }
 
-.materia{
+.materia, .departamento{
     display: none;
 }

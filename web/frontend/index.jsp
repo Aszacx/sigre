@@ -3,14 +3,14 @@
 <%@include file="layout/head.jsp"%>
 <main class="cd-main">
     <header>
-        <div style="width: 30%; float: left; margin-top: 30px;">
+        <div style="width: 25%; float: left; margin-top: 30px;">
             <img src="frontend/assets/img/ipn.png" alt="IPN" width="150px" />
         </div>
-        <div style="width: 40%; float: left;">
+        <div style="width: 50%; float: left;">
             <h1>SIGRE</h1>
             <h4>Sistema Integral de Gestión de Revisión de Evaluación</h4>
         </div>
-        <div style="width: 30%; float: left; margin-top: 50px;">
+        <div style="width: 25%; float: left; margin-top: 50px;">
             <img src="frontend/assets/img/escom.png" alt="ESCOM" width="150px" />
         </div>
     </header>

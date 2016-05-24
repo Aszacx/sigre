@@ -26,6 +26,7 @@ public class Usuario {
    private String motivos;
    private String fecha;
    private String[] materias;
+   private String estatus;
 
     public Usuario() {
     }
@@ -59,6 +60,17 @@ public class Usuario {
         this.materias = materias;
     }
     
+    //Obtener usuario profesor
+    public Usuario(int idUsuario, String nombre, String apellidoP, String apellidoM, String materia, String cel, String email) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellidoP = apellidoP;
+        this.apellidoM = apellidoM;
+        this.materia = materia;
+        this.cel = cel;
+        this.email = email;
+    }
+    
     //Editar Usuarios
     public Usuario(int idUsuario, int tipo, String nombre, String apellidoP, String apellidoM, String cel, String email, String pass, int Departamento_idDepartamento) {
         this.idUsuario = idUsuario;
@@ -73,7 +85,7 @@ public class Usuario {
     }   
     
     //Obtener Usuarios
-    public Usuario(int idUsuario, int tipo, String nombre, String apellidoP, String apellidoM, String cel, String email, String pass, String departamento) {
+    public Usuario(int idUsuario, int tipo, String nombre, String apellidoP, String apellidoM, String cel, String email, String pass, int Departamento_idDepartamento, String departamento) {
         this.idUsuario = idUsuario;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -82,6 +94,7 @@ public class Usuario {
         this.cel = cel;
         this.email = email;
         this.pass = pass;
+        this.Departamento_idDepartamento = Departamento_idDepartamento;
         this.departamento = departamento;
     }
     
@@ -99,10 +112,21 @@ public class Usuario {
         this.motivos = motivos;        
     }
     
+    //Obtener usuario profesor por Materia
+    public Usuario(int idUsuario, String nombre, String apellidoP, String apellidoM, String cel, String email) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellidoP = apellidoP;
+        this.apellidoM = apellidoM;
+        this.cel = cel;
+        this.email = email;
+    }   
+    
     //Obtener citas
-    public Usuario(int Materia_idMateria, String fecha, String nombre, String apellidoP, String apellidoM, 
-                    String boleta, String cel, String email) {
-        this.Materia_idMateria = Materia_idMateria;    
+    public Usuario(int Materia_idMateria, String materia, String fecha, String nombre, String apellidoP, String apellidoM, 
+                    String boleta, String cel, String email, String estatus) {
+        this.Materia_idMateria = Materia_idMateria;
+        this.materia = materia;    
         this.fecha = fecha;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
@@ -110,7 +134,9 @@ public class Usuario {
         this.boleta = boleta;
         this.cel = cel;
         this.email = email;
+        this.estatus = estatus;
     }
+    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -237,6 +263,14 @@ public class Usuario {
 
     public void setMaterias(String[] materias) {
         this.materias = materias;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
     }
 
     

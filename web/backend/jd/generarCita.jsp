@@ -6,15 +6,18 @@
     if (sesion.getAttribute("email") == null) {
         response.sendRedirect(request.getContextPath());
     }
+    else if(sesion.getAttribute("tipo").equals(3)){
+        response.sendRedirect(request.getContextPath()+"/subAcademica");
+    }
 %> 
 <div class="container-fluid">
-    <div class="row">
+    <div class="container">
         <div class="col-md-12">
             <h2>Generar una Cita y Jurado</h2>
-            <p>Seleccione por lo menos 4 profesores para conformar el juado</p>
+            <p>Seleccione por lo menos 3 profesores para conformar el jurado.</p>
         </div>
     </div>
-    <div class="row">
+    <div class="container">
         <div class="col-md-12">
             <div class="input-group">
                 <div class="input-group-addon">
@@ -25,48 +28,60 @@
             <!-- /input-group -->
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 ">
-            <div class="form">
-                <div class="panel panel-default">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th><b>Nombre</b></th>
-                                <th><b>Turno</b></th>
-                                <th><b>Correo</b></th>
-                                <th><b>Celular</b></th>
-                                <th><b>SelecciÃ³n</b></th>
-                            </tr>
-                        </thead>
-                        <tbody class="searchable">
+    <form action="<%= request.getContextPath() %>/opCitas?accion=notificar" method="POST">
+        <div class="container">
+            <div class="col-md-12 ">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><b>Nombre(s)</b></th>
+                            <th><b>Apellidos</b></th>
+                            <th><b>Correo</b></th>
+                            <th><b>Teléfono</b></th>
+                            <th><b>Seleccionar</b></th>
+                        </tr>
+                    </thead>
+                    <tbody class="searchable">
+                        <c:forEach items="${usuarios}" var="item">
                             <tr style="display:table-row">
-                                <td>nombre apeido</td>
-                                <td>turno</td>
-                                <td>algo@dominio.com</td>
-                                <td>##########</td>
-                                <td><input type="checkbox" name="seleccionado"/></td>
+                                <td><c:out value="${item.getNombre()}" /></td>
+                                <td><c:out value="${item.getApellidoP()} ${item.getApellidoM()}" /></td>
+                                <td><c:out value="${item.getEmail()}" /></td>
+                                <td><c:out value="${item.getCel()}" /></td>
+                                <td><input type="checkbox" name="seleccionar"/></td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="derecha"><a class="btn btn-primary btn-lg" href="#" role="button">Seleccionar&raquo;</a></p>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
-        </div> 
-    </div>
-    <div class="row">
-        <div class="form">
-            <strong>Redacta el correo para el alumno, no olvides poner la fecha y hora</strong>
-        <br>
-        <textarea name="message" class="tex-correo centrar">
-            Por medio de este correo se te notifica que el dia FECHA a las HORA, en la academia LUGAR, se realizarÃ¡ la revisiÃ³n del examen. 
-            Ya todos los preparativos estan listos, por favor confirma tu asistencia, o la cancelaciÃ³n de dicha revisiÃ³n. 
-            Atte: Jefe de departamento Nombre
-        </textarea>
-        <br>
-        <p class="centrar"><a class="btn btn-primary btn-lg" href="listaExamenesPendientes.jsp" role="button">Enviar&raquo;</a></p>
         </div>
-    </div>
+        <div class="container">
+            <div class="form">
+                <h4><strong>Mensaje de correo para los participantes de la revisón, no olvides poner la fecha y hora</strong></h4>
+            <br>
+            <textarea name="message" class="tex-correo centrar">
+                Por medio de este correo se te notifica que el dia FECHA a las HORA, en la academia LUGAR, se realizará la revisión del examen. 
+                Ya todos los preparativos estan listos, por favor confirma tu asistencia, o la cancelación de dicha revisión. 
+                Atte: Jefe de departamento Nombre
+            </textarea>
+            <br>
+            <p class="centrar"><input type="submit" class="btn btn-lg" value="Notificar" /></p>
+            </div>
+        </div>
+    </form>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        (function ($) {
+            $('#filtrar').keyup(function () {
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+    });
+</script>    
 <%@include file="../layout/foot.jsp"%>
          

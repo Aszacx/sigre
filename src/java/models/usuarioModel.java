@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -28,7 +27,7 @@ public class usuarioModel extends conexion {
         ResultSet rs = null;
         try {
             String sql = "SELECT * FROM usuario AS u LEFT JOIN jefe AS j ON j.Usuario_idUsuario = u.idUsuario "
-                    + "WHERE u.tipo = 1 OR u.tipo = 2";
+                    + "LEFT JOIN departamento AS d ON d.idDepartamento = j.Departamento_idDepartamento WHERE u.tipo = 1 OR u.tipo = 3";
             pst = getConnection().prepareCall(sql);
             rs = pst.executeQuery();
             
@@ -41,7 +40,8 @@ public class usuarioModel extends conexion {
                                          rs.getString("cel"), 
                                          rs.getString("email"),
                                          rs.getString("pass"),
-                                         rs.getInt("Departamento_idDepartamento")));
+                                         rs.getInt("Departamento_idDepartamento"),
+                                         rs.getString("departamento")));
             }
         } catch (Exception e) {
         } finally {
@@ -49,6 +49,41 @@ public class usuarioModel extends conexion {
                 if(getConnection() != null) getConnection().close();
                 if(pst != null) getConnection().close();
             } catch (Exception e) {
+            }
+        }  
+        return usuarios;
+    }
+    
+    public ArrayList<Usuario> obtenerDocentes() throws SQLException{
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT u.idUsuario,u.nombre,u.apellidoP,u.apellidoM,GROUP_CONCAT(materia) materias, u.cel,u.email "
+                    + "FROM usuario AS u LEFT JOIN profesor AS p ON p.Usuario_idUsuario = u.idUsuario "
+                    + "LEFT JOIN profesor_has_materia AS pm ON pm.Profesor_idProfesor = p.idProfesor "
+                    + "LEFT JOIN materia AS m ON m.idMateria = pm.Materia_idMateria WHERE u.tipo = 2 GROUP BY u.idUsuario";
+            pst = getConnection().prepareCall(sql);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                usuarios.add(new Usuario(rs.getInt("idUsuario"),
+                                         rs.getString("nombre"), 
+                                         rs.getString("apellidoP"),
+                                         rs.getString("apellidoM"), 
+                                         rs.getString("materias"),
+                                         rs.getString("cel"), 
+                                         rs.getString("email")
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if(getConnection() != null) getConnection().close();
+                if(pst != null) getConnection().close();
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }  
         return usuarios;
@@ -74,6 +109,7 @@ public class usuarioModel extends conexion {
                                       rs.getString("cel"), 
                                       rs.getString("email"),
                                       rs.getString("pass"),
+                                      rs.getInt("Departamento_idDepartamento"),
                                       rs.getString("departamento"));
             }
         } catch (Exception e) {
@@ -100,13 +136,14 @@ public class usuarioModel extends conexion {
         ResultSet rs = null;
         try {
             String sql = "UPDATE usuario AS u LEFT JOIN jefe AS j ON j.Usuario_idUsuario = u.idUsuario "
-                    + "SET p.pass = ? WHERE u.email = ?";
+                    + "SET j.pass = ? WHERE u.email = ?";
             pst = getConnection().prepareStatement(sql);
             pst.setString(1, pass);
             pst.setString(2, email);
 
             if (pst.executeUpdate() == 1) {
-                String sql2 = "SELECT * FROM usuario AS u LEFT JOIN jefe AS j ON j.Usuario_idUsuario = u.idUsuario WHERE u.email = ?";
+                String sql2 = "SELECT * FROM usuario AS u LEFT JOIN jefe AS j ON j.Usuario_idUsuario = u.idUsuario "
+                        + "LEFT JOIN departamento AS d ON d.idDepartamento = j.Departamento_idDepartamento WHERE u.email = ?";
                 pst = getConnection().prepareCall(sql2);
                 pst.setString(1, email);
                 rs = pst.executeQuery();
@@ -120,6 +157,7 @@ public class usuarioModel extends conexion {
                                           rs.getString("cel"), 
                                           rs.getString("email"),
                                           rs.getString("pass"),
+                                          rs.getInt("Departamento_idDepartamento"),
                                           rs.getString("departamento"));
                 }
             }
@@ -146,6 +184,7 @@ public class usuarioModel extends conexion {
         boolean flag = false;
         int id = 0;
         int id_profesor = 0;
+        int tipo = user.getTipo();
         try {            
             String sql = "INSERT INTO usuario (tipo,nombre,apellidoP,apellidoM,cel,email) VALUES (?,?,?,?,?,?)";
             pst = getConnection().prepareStatement(sql);
@@ -156,8 +195,6 @@ public class usuarioModel extends conexion {
             pst.setString(5, user.getCel());
             pst.setString(6, user.getEmail());
             
-            //System.out.println(user.getTipo());
-            
             if(pst.executeUpdate() == 1){
                 String key = "SELECT LAST_INSERT_ID()";
                 pst = getConnection().prepareCall(key);
@@ -167,13 +204,21 @@ public class usuarioModel extends conexion {
                     id = Integer.parseInt(rs.getString(1));
                 }
                 
-                if(user.getTipo() == 3){
+                if(tipo == 1){
+                    String sql2 = "INSERT INTO jefe (pass, Usuario_idUsuario, Departamento_idDepartamento) VALUES (?,?,?)";
+                    pst = getConnection().prepareStatement(sql2);
+                    pst.setString(1, user.getPass());
+                    pst.setInt(2, id);
+                    pst.setInt(3, user.getDepartamento_idDepartamento());
+                    pst.executeUpdate();
+                }
+                else if(tipo == 2){
                     String sql2 = "INSERT INTO profesor (Usuario_idUsuario) VALUES (?)";
                     pst = getConnection().prepareStatement(sql2);
                     pst.setInt(1, id);
-                    pst.executeUpdate();
                     
-                    if(pst.executeUpdate() == 1){                
+                    if(pst.executeUpdate() == 1){
+                        //flag = true;
                         String key3 = "SELECT LAST_INSERT_ID()";
                         pst = getConnection().prepareCall(key3);
                         rs = pst.executeQuery();
@@ -181,31 +226,19 @@ public class usuarioModel extends conexion {
                         if(rs.next()){
                             id_profesor = Integer.parseInt(rs.getString(1));
                         }
-                        String[] arreglo;
-                        arreglo = user.getMaterias();
-                        System.out.println(Arrays.toString(arreglo));
-                        for (String arreglo1 : arreglo) {
-                            String materia = arreglo1;
-                            System.out.println(materia+"<<materia");
-//                            String sql3 = "INSERT INTO profesor_has_materia (Profesor_idProfesor, Materia_idMateria) VALUES (?,?)";
-//                            pst = getConnection().prepareStatement(sql3);
-//                            pst.setInt(1, id_profesor);
-//                            pst.setInt(2, materia);
+                        String[] arreglo = user.getMaterias();
+                        for (int i = 0; i < arreglo.length; i++) {
+                            //System.out.println(materia+"<<materia");
+                            String sql3 = "INSERT INTO profesor_has_materia (Profesor_idProfesor, Materia_idMateria) VALUES (?,?)";
+                            pst = getConnection().prepareStatement(sql3);
+                            pst.setInt(1, id_profesor);
+                            pst.setInt(2, Integer.parseInt(arreglo[i]));
+                            pst.executeUpdate();
                         }
-                        if(pst.executeUpdate() == 1){
-                            flag = true;
-                        }
+                            if(pst.executeUpdate() == 1){
+                                flag = true;
+                            }               
                     }
-                }
-                else{
-                    String sql2 = "INSERT INTO jefe (pass, Usuario_idUsuario, Departamento_idDepartamento) VALUES (?,?,?)";
-                    pst = getConnection().prepareStatement(sql2);
-                    pst.setString(1, user.getPass());
-                    pst.setInt(2, id);
-                    pst.setInt(3, user.getDepartamento_idDepartamento());
-                }
-                if(pst.executeUpdate() == 1){
-                    flag = true;
                 }
             }
         } catch (SQLException | NumberFormatException e) {
@@ -215,6 +248,7 @@ public class usuarioModel extends conexion {
                 if(getConnection() != null) getConnection().close();
                 if(pst != null) getConnection().close();
             } catch (Exception e) {
+                System.out.println(e);
             }
         }
         return flag;
@@ -290,8 +324,8 @@ public class usuarioModel extends conexion {
         ResultSet rs = null;
         int tipo = 0;
         try {
-            String sql = "SELECT u.tipo FROM usuario AS u LEFT JOIN jefe AS p ON p.Usuario_idUsuario = u.idUsuario "
-                    + "WHERE u.email = ? AND p.pass = ?";
+            String sql = "SELECT u.tipo FROM usuario AS u LEFT JOIN jefe AS j ON j.Usuario_idUsuario = u.idUsuario "
+                    + "WHERE u.email = ? AND j.pass = ?";
             pst = getConnection().prepareStatement(sql);
             pst.setString(1, email);
             pst.setString(2, pass);
@@ -391,20 +425,23 @@ public class usuarioModel extends conexion {
         ResultSet rs = null;
         try {
             String sql = "SELECT * FROM usuario AS u LEFT JOIN alumno AS a ON a.Usuario_idUsuario = u.idUsuario "
-                    + "LEFT JOIN cita AS c ON c.Alumno_idAlumno = a.idAlumno WHERE u.tipo = ?";
+                    + "LEFT JOIN cita AS c ON c.Alumno_idAlumno = a.idAlumno "
+                    + "LEFT JOIN materia AS m ON m.idMateria = c.Materia_idMateria WHERE u.tipo = ?";
             pst = getConnection().prepareCall(sql);
             pst.setInt(1, 4);
             rs = pst.executeQuery();
             
             while(rs.next()){
                 citas.add(new Usuario(rs.getInt("Materia_idMateria"),
+                                         rs.getString("materia"),
                                          rs.getString("fecha"),
                                          rs.getString("nombre"), 
                                          rs.getString("apellidoP"),
                                          rs.getString("apellidoM"), 
                                          rs.getString("boleta"),
                                          rs.getString("cel"), 
-                                         rs.getString("email")));
+                                         rs.getString("email"),
+                                         rs.getString("estatus")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -417,4 +454,75 @@ public class usuarioModel extends conexion {
         }  
         return citas;
     }
+    
+    public Usuario getUsuarioByCita(int id) throws SQLException {
+        Usuario usuario = null;
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+        try {
+            String sql2 = "SELECT * FROM usuario AS u LEFT JOIN alumno AS a ON a.Usuario_idUsuario = u.idUsuario "
+                    + "LEFT JOIN cita AS c ON c.Alumno_idAlumno = a.idAlumno WHERE u.idUsuario = ?";
+            pst = getConnection().prepareCall(sql2);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                usuario = new Usuario(rs.getInt("idUsuario"),
+                        rs.getString("nombre"),
+                        rs.getString("apellidoP"),
+                        rs.getString("apellidoM"),
+                        rs.getString("cel"),
+                        rs.getString("email"),
+                        rs.getString("boleta"),
+                        rs.getInt("idCita"));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            try {
+                if (getConnection() != null) {
+                    getConnection().close();
+                }
+                if (pst != null) {
+                    getConnection().close();
+                }
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return usuario;
+    }
+    
+    public ArrayList<Usuario> getUsuariosByMateria(int idMateria) throws SQLException{
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM usuario AS u LEFT JOIN profesor AS p ON p.Usuario_idUsuario = u.idUsuario "
+                    + "LEFT JOIN profesor_has_materia AS pm ON pm.Profesor_idProfesor = p.idProfesor "
+                    + "LEFT JOIN materia AS m ON m.idMateria = pm.Materia_idMateria WHERE m.idMateria = ? AND u.tipo = ?";
+            pst = getConnection().prepareCall(sql);
+            pst.setInt(1, idMateria);
+            pst.setInt(2, 2);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                usuarios.add(new Usuario(rs.getInt("idUsuario"),
+                                         rs.getString("nombre"), 
+                                         rs.getString("apellidoP"),
+                                         rs.getString("apellidoM"), 
+                                         rs.getString("cel"), 
+                                         rs.getString("email")));
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+                if(getConnection() != null) getConnection().close();
+                if(pst != null) getConnection().close();
+            } catch (Exception e) {
+            }
+        }  
+        return usuarios;
+    }
+    
 }
