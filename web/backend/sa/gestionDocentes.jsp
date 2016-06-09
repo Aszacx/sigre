@@ -66,7 +66,10 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="container">
+    <div class="container">
+        <%@include file="graficas/profesores.jsp"%>
+    </div>
     <div class="col-md-10 col-md-offset-1">
         <p class="derecha"><a class="btn btn-primary btn-lg" href="usuarios" role="button">Gestión de Usuarios</a>
     </div>

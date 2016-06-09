@@ -13,8 +13,9 @@
       <link rel="stylesheet" href="backend/assets/css/bootstrap-theme.min.css">
       <link rel="stylesheet" href="backend/assets/css/main.css">
       <link rel="stylesheet" href="backend/assets/css/bootstrap-select.css">
+      <link rel="stylesheet" href="backend/assets/css/bootstrapValidator.css">
       <script src="backend/assets/js/vendor/jquery-1.11.2.min.js"></script>
-      <script src="backend/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+      <script src="backend/assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>     
     </head>
     <body>   
         <div class="container-fluid">

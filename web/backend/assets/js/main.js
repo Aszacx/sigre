@@ -41,6 +41,14 @@ $(function(){
             backdrop:"static"
         });
     });
+    
+    $("#grafica").on("click",function(){
+        $(".modal-title").text("Citas");
+        $("#modalGrafica").modal({
+            show:true,
+            backdrop:"static"
+        });
+    });
 });
 
 $('.modal').on('shown.bs.modal', function() {

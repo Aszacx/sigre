@@ -59,8 +59,9 @@
             <div class="form">
                 <h4><strong>Mensaje de correo para los participantes de la revisón, no olvides poner la fecha y hora</strong></h4>
             <br>
-            <textarea name="message" class="tex-correo centrar">
-                Por medio de este correo se te notifica que el dia FECHA a las HORA, en la academia LUGAR, se realizará la revisión del examen. 
+            <textarea name="correo" class="tex-correo centrar">
+                Por medio de este correo se te notifica que el dia FECHA a las HORA, en la academia LUGAR, se realizará la revisión del examen
+                del alumno <c:out value="${usuario.getNombre()}" />. 
                 Ya todos los preparativos estan listos, por favor confirma tu asistencia, o la cancelación de dicha revisión. 
                 Atte: Jefe de departamento Nombre
             </textarea>

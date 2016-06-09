@@ -40,8 +40,9 @@ public class citas extends HttpServlet {
        
         String msj = "";
         usuarioModel cp = new usuarioModel();
-        Integer id_materia = Integer.parseInt(request.getParameter("id"));
+        int id_materia = Integer.parseInt(request.getParameter("id"));
         ArrayList<Usuario> usuarios = cp.getUsuariosByMateria(id_materia);
+        Usuario usuario = cp.getUsuarioByCita(id_materia);
         
         if(usuarios.isEmpty()){
             msj = "No hay profesores registrados.";
@@ -49,6 +50,7 @@ public class citas extends HttpServlet {
             msj = "Se encontraron "+usuarios.size()+" profesores.";
         }
         request.setAttribute("usuarios", usuarios);
+        request.setAttribute("usuario", usuario);
         request.setAttribute("msj", msj);
         request.getRequestDispatcher("backend/jd/generarCita.jsp").forward(request, response);
         

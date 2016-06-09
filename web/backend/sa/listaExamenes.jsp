@@ -55,12 +55,28 @@
             </div>
         </div>
     </div>
+        <div class="container">
+            <%@include file="graficas/citas.jsp"%>
+        </div>
         <div class="col-md-12">
             <p class="derecha"><a class="btn btn-primary btn-lg" href="subAcademica" role="button">Ir a Home &raquo;</a>
         </div>
+</div>
+<!--Modal Generar Gráfica-->
+<div class="modal fade" id="modalGrafica" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="ModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
     </div>
 </div>
-<SCRIPT type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         (function ($) {
             $('#filtrar').keyup(function () {
@@ -72,5 +88,5 @@
             })
         }(jQuery));
     });
-</SCRIPT>
+</script>
 <%@include file="../layout/foot.jsp"%>
